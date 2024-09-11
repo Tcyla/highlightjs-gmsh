@@ -1,0 +1,45 @@
+lcar1 = .1;
+
+Macro CheeseHole
+
+  p2 = newp; Point(p2) = {x+r,y,  z,  lcar3};
+  c1 = newc; Circle(c1) = {p2,p1,p7};
+  l1 = newcl; Curve Loop(l1) = {c5,c10,c4};
+  s1 = news; Surface(s1) = {l1};
+
+  theloops[t] = newsl;
+  Surface Loop(theloops[t]) = {s1, s2, s3, s4, s5, s6, s7, s8};
+
+  thehole = newv;
+  Volume(thehole) = theloops[t];
+
+Return
+
+// We can use a `For' loop to generate five holes in the cube:
+
+x = 0; y = 0.75; z = 0; r = 0.09;
+
+For t In {1:5}
+
+  x += 0.166;
+  z += 0.166;
+
+  Call CheeseHole;
+
+  Physical Volume (t) = thehole;
+
+  Printf("Hole %g (center = {%g,%g,%g}, radius = %g) has number %g!",
+	 t, x, y, z, r, thehole);
+
+EndFor
+
+theloops[0] = newreg;
+Surface Loop(theloops[0]) = {23:39:2};
+
+Volume(186) = {theloops[]};
+
+Physical Volume (10) = 186;
+
+Mesh.Algorithm = 6;
+
+MeshAlgorithm Surface {31, 35} = 1;

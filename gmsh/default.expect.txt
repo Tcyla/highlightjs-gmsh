@@ -1,0 +1,45 @@
+lcar1 = <span class="hljs-number">.1</span>;
+
+<span class="hljs-keyword">Macro</span> CheeseHole
+
+  p2 = <span class="hljs-literal">newp</span>; <span class="hljs-type">Point</span>(p2) = {x+r,y,  z,  lcar3};
+  c1 = <span class="hljs-literal">newc</span>; <span class="hljs-type">Circle</span>(c1) = {p2,p1,p7};
+  l1 = <span class="hljs-literal">newcl</span>; <span class="hljs-type">Curve</span> <span class="hljs-type">Loop</span>(l1) = {c5,c10,c4};
+  s1 = <span class="hljs-literal">news</span>; <span class="hljs-type">Surface</span>(s1) = {l1};
+
+  theloops[t] = <span class="hljs-literal">newsl</span>;
+  <span class="hljs-type">Surface</span> <span class="hljs-type">Loop</span>(theloops[t]) = {s1, s2, s3, s4, s5, s6, s7, s8};
+
+  thehole = <span class="hljs-literal">newv</span>;
+  <span class="hljs-type">Volume</span>(thehole) = theloops[t];
+
+<span class="hljs-keyword">Return</span>
+
+<span class="hljs-comment">// We can use a `For&#x27; loop to generate five holes in the cube:</span>
+
+x = <span class="hljs-number">0</span>; y = <span class="hljs-number">0.75</span>; z = <span class="hljs-number">0</span>; r = <span class="hljs-number">0.09</span>;
+
+<span class="hljs-keyword">For</span> t <span class="hljs-keyword">In</span> {<span class="hljs-number">1</span>:<span class="hljs-number">5</span>}
+
+  x += <span class="hljs-number">0.166</span>;
+  z += <span class="hljs-number">0.166</span>;
+
+  <span class="hljs-keyword">Call</span> CheeseHole;
+
+  <span class="hljs-type">Physical</span> <span class="hljs-type">Volume</span> (t) = thehole;
+
+  <span class="hljs-built_in">Printf</span>(<span class="hljs-string">&quot;Hole %g (center = {%g,%g,%g}, radius = %g) has number %g!&quot;</span>,
+	 t, x, y, z, r, thehole);
+
+<span class="hljs-keyword">EndFor</span>
+
+theloops[<span class="hljs-number">0</span>] = <span class="hljs-literal">newreg</span>;
+<span class="hljs-type">Surface</span> <span class="hljs-type">Loop</span>(theloops[<span class="hljs-number">0</span>]) = {<span class="hljs-number">23</span>:<span class="hljs-number">39</span>:<span class="hljs-number">2</span>};
+
+<span class="hljs-type">Volume</span>(<span class="hljs-number">186</span>) = {theloops[]};
+
+<span class="hljs-type">Physical</span> <span class="hljs-type">Volume</span> (<span class="hljs-number">10</span>) = <span class="hljs-number">186</span>;
+
+Mesh.Algorithm = <span class="hljs-number">6</span>;
+
+MeshAlgorithm <span class="hljs-type">Surface</span> {<span class="hljs-number">31</span>, <span class="hljs-number">35</span>} = <span class="hljs-number">1</span>;
